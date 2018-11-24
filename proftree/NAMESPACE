@@ -1,0 +1,3 @@
+useDynLib(proftree, .registration=TRUE)
+exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
