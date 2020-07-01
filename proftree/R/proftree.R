@@ -184,6 +184,12 @@ proftree <- function(formula, data, subset, na.action, weights, control = proftr
               maxNode, 
               control)
   
+  timer_end <- proc.time() - timer_start
+  
+  if (control$verbose) {
+    cat(paste("\nTotal iterations:", out[[14]])) # CHANGE TO out[[15]]
+    cat(paste("\nTime elapsed:", floor(timer_end[3]/60), "min", round(timer_end[3] %% 60), "sec\n\n"))
+  }
   if (out[[8]][1] < 0L) { # CHANGE TO out[[9]]
     stop("no split could be found", call.=FALSE)
   }
@@ -212,14 +218,13 @@ proftree <- function(formula, data, subset, na.action, weights, control = proftr
   fitted <- data.frame(mtree$weights, prediction, mf[nVariables])
   names(fitted) <- c("(weights)", "(fitted)", "(response)")
   #fitnesscurve <- out[[8]][which(out[[8]] < 999999)]
-  timer_end <- proc.time() - timer_start
   
   partyObject <- party(node = node,
                        data = mf,
                        fitted = fitted,
                        terms = mt,
                        info = list(method        = "proftree",
-                                   version       = "0.0.2",
+                                   version       = "1.0.0",
                                    niterations   = out[[14]], # CHANGE TO out[[15]]
                                    miniterations = out[[15]], # CHANGE TO out[[16]]
                                    errortol      = out[[16]], # CHANGE TO out[[17]]
@@ -228,7 +233,7 @@ proftree <- function(formula, data, subset, na.action, weights, control = proftr
                                    lambda        = out[[30]], # CHANGE TO out[[31]]
                                    seed          = mtree$seed,
                                    #fitnesscurve  = fitnesscurve,
-                                   evalfun       = out[[7]],
+                                   evalfun       = -out[[7]],
                                    runtime       = timer_end[3],
                                    call          = ocall))
   class(partyObject) <- c("constparty", "party")

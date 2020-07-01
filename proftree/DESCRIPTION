@@ -1,14 +1,24 @@
 Package: proftree
-Type: Package
-Title: ProfTree - Profit Driven Decision Trees for Churn Prediction
-Version: 0.1.0
-Author: Sebastiaan Hoeppner, Eugen Stripling, Bart Baesens, Seppe vanden Broucke, and Tim Verdonck
-Maintainer: Sebastiaan Hoeppner <sebastiaan.hoppner@kuleuven.be>
-Description: Profit driven decision trees for churn prediction based on EMPC performance measure using an evolutionary algorithm.
-License: GPL (>= 2)
-LazyData: TRUE
-Imports: 
-    Rcpp (>= 0.12.7)
-LinkingTo: 
-    Rcpp
-RoxygenNote: 6.0.1
+Title: Profit Driven Decision Trees for Churn Prediction
+Version: 1.0.0
+Authors@R: c(
+            person(given = "Sebastiaan", family = "Hoppner", role = c("aut", "cre"), email = "sebastiaan.hoppner@gmail.com"),
+            person(given = "Eugen", family = "Stripling", role = c("aut")),
+            person(given = "Bart", family = "Baesens", role = c("aut")),
+            person(given = "Seppe", family = "vanden Broucke", role = c("aut")),
+            person(given = "Tim", family = "Verdonck", role = c("aut"))
+             )	 
+Description: Method for fitting a profit driven decision tree for customer churn prediction (Hoppner et al. (2020) <DOI:10.1016/j.ejor.2018.11.072>).
+Depends: R (>= 3.5.0), partykit, EMP
+Imports: Rcpp
+LinkingTo: Rcpp
+License: GPL-2 | GPL-3
+Author: Sebastiaan Hoppner [aut, cre],
+  Eugen Stripling [aut],
+  Bart Baesens [aut],
+  Seppe vanden Broucke [aut],
+  Tim Verdonck [aut]
+Maintainer: Sebastiaan Hoppner <sebastiaan.hoppner@gmail.com>
+LazyData: FALSE
+NeedsCompilation: yes
+

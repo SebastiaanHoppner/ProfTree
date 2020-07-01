@@ -102,7 +102,7 @@ List ROCconvexhull(NumericVector scores, IntegerVector classes){
   
   if(F1.size() < 2){
     List out;   // empty list
-    std::cout << "Not enough distinct predictions to compute ROC convex hull.";
+    //std::cout << "Not enough distinct predictions to compute ROC convex hull.";
     return out;
   }
   

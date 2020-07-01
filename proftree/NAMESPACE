@@ -1,3 +1,10 @@
+import("partykit")
+import("EMP")
+importFrom("Rcpp", "evalCpp")
+importFrom("stats", "model.weights", "runif")
+
 useDynLib(proftree, .registration=TRUE)
 exportPattern("^[[:alpha:]]+")
-importFrom(Rcpp, evalCpp)
+
+export(proftree)
+export(proftree.control)

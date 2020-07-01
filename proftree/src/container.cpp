@@ -91,7 +91,7 @@ Container::Container(int* R_nInstances, int* R_nVariables, int *R_varType, doubl
   // for(int i = 0; i < this->nIterations; i++){
   //   this->fitnesscurve[i] = 999999;
   // }
-  // std::cout << "at 94" << "\n";
+  // cout << "at 94" << "\n";
   
   // transform data in vector format into a n x p matrix
   this->sumWeights = 0;
@@ -128,7 +128,6 @@ Container::Container(int* R_nInstances, int* R_nVariables, int *R_varType, doubl
   this->seed = (*R_seed);
   this->trees = new Tree*[this->nTrees];
   
-  // std::cout << "\n" << "seed: " << this->seed << "\n";
   
   GetRNGstate();
   for(int i = 0; i < this->nTrees; i++){
@@ -147,17 +146,14 @@ Container::Container(int* R_nInstances, int* R_nVariables, int *R_varType, doubl
   if(allTreesInitialized == true){
     // start evolving the initial solution
     GetRNGstate();
-    //std::cout << "at 150" << "\n";
+    //cout << "at 150" << "\n";
     bool succ = this->evolution();
     PutRNGstate();
     // write the information of the best tree into the variables passed from R
     if(succ == true){
       if(this->elitismList[0] < this->nTrees){
         *R_nIterations = this->nIterations;
-        if(this->verbose == TRUE){
-          std::cout << "niterations = " << *R_nIterations << "\n";
-          std::cout << "\n";
-        }
+
         for(int i = 0; i < *this->trees[this->elitismList[0]]->maxNode; i++){
           if(this->trees[this->elitismList[0]]->splitV[i] >= 0 ){
             R_splitV[i] = this->trees[this->elitismList[0]]->splitV[i]+1;
@@ -187,8 +183,8 @@ Container::Container(int* R_nInstances, int* R_nVariables, int *R_varType, doubl
         for(int i = 0; i < this->nInstances; i++){
           R_prediction[i] = this->trees[this->elitismList[0]]->classification[i];
         }
-        // //std::cout << "nIterations = " << this->nIterations << "\n";
-        // //std::cout << "length of this->fitnesscurve = " << sizeof(this->fitnesscurve) << "\n";
+        // //cout << "nIterations = " << this->nIterations << "\n";
+        // //cout << "length of this->fitnesscurve = " << sizeof(this->fitnesscurve) << "\n";
         // for(int i = 0; i < (this->nIterations); i++){ // MAYBY check .size() of this->fitnesscurve !!! <============= !!!!!!!!!!!!!!!
         //   R_fitnesscurve[i] = this->fitnesscurve[i];
         // }
@@ -201,7 +197,7 @@ Container::Container(int* R_nInstances, int* R_nVariables, int *R_varType, doubl
 
 bool Container::evolution(){
   // evolves the initial solution
-  //std::cout << "at 204" << "\n";
+  //cout << "at 204" << "\n";
   bool elitismFlag = false;
   
   for(int i = 0; i < this->nIterations; i++){
@@ -212,7 +208,12 @@ bool Container::evolution(){
     }
     
     if(this->verbose == TRUE && i > 0 && (i+1)%50 == 0){
-      std::cout << (i+1) << "th iteration \n";
+      if(i+1 < 100){
+        cout << "  ";
+      } else if(i+1 < 1000){
+        cout << " ";
+      }
+      cout << (i+1) << "th iteration -- ";
     }
     
     for(int j = 0; j < this->nTrees; j++){
@@ -282,9 +283,9 @@ bool Container::evolution(){
     //this->fitnesscurve[i] = this->trees[this->elitismList[0]]->performance;
     
     if(this->verbose == TRUE && i > 0 && (i+1)%50 == 0){
-      std::cout << "Perf. = " << this->trees[this->elitismList[0]]->performance << "\n";
-      //std::cout << "Perf. = " << this->fitnesscurve[i] << "\n";
-      std::cout << "\n";
+      cout << "EMPC - lambda * |Tree| = " << -this->trees[this->elitismList[0]]->performance << "\n";
+      //cout << "Perf. = " << this->fitnesscurve[i] << "\n";
+      //cout << "\n";
     }
   }
   // pruning of all trees
